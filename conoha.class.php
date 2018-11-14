@@ -157,7 +157,7 @@
 		
 		private $container;
 		
-		function __construct($token,$expire) {
+		function __construct(&$token,$expire) {
 			$this->container = OS_CONTAINER.'/';
 			writeLog(__METHOD__.' - Creating object storage server connection.');
 			
@@ -166,7 +166,7 @@
 					OS_USERNAME,
 					OS_PASSWORD,
 					OS_TENANT,
-					$newToken,
+					$token,
 					$expire
 				);
 			} catch (BW_Error $e) {
