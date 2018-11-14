@@ -114,6 +114,15 @@
 			writeLog('Template: '.$template.' executed!');
 		}
 		
+		function endRequest($time) {
+			$this->database->logRequestEnd(
+				http_response_code(),
+				$time,
+				TRANSACTIONID,
+				$this->client['SID']
+			);
+		}
+		
 		//Inilization
 		function ini() {
 			$this->smartURL();

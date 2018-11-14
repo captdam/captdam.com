@@ -14,6 +14,25 @@ END;
 
 
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `logRequestEnd`(
+	IN in_status	CHAR(3),
+	IN in_time	VARCHAR(255),
+	IN in_phpid	VARCHAR(255),
+	IN in_sessionid	VARCHAR(255)
+)
+    COMMENT 'Record request execution result'
+BEGIN
+	UPDATE	BW_Log L
+    SET
+		L.ExecutionTime = in_time,
+        L.`Status` = in_status
+	WHERE
+		L.SessionID = in_sessionid AND L.PHPID = in_phpid
+	LIMIT 1;
+END;
+
+
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `pageCreate`(
 	IN in_url	CHAR(255),
 	IN in_title	VARCHAR(255),
@@ -54,16 +73,16 @@ END;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `pageModify`(
 	IN in_url		CHAR(255),
 	IN in_mime		VARCHAR(255),
-	IN in_title		VARCHAR(255),
-	IN in_keywords		VARCHAR(255),
-	IN in_description	VARCHAR(4096),
+	IN in_title		VARCHAR(255) CHARSET utf8,
+	IN in_keywords		VARCHAR(255) CHARSET utf8,
+	IN in_description	VARCHAR(4096) CHARSET utf8,
 	IN in_category		VARCHAR(255),
 	IN in_author		VARCHAR(255),
 	IN in_templatemain	VARCHAR(255),
 	IN in_templatesub	VARCHAR(255),
-	IN in_data		LONGTEXT,
+	IN in_data		LONGTEXT CHARSET utf8,
 	IN in_binary		LONGBLOB,
-	IN in_json		LONGTEXT,
+	IN in_json		LONGTEXT CHARSET utf8,
 	IN in_copyright		VARCHAR(255),
 	IN in_status		CHAR(1)
 )
@@ -93,9 +112,9 @@ END;
 
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `pageModifyIDE`(
-	IN in_url			CHAR(255),
-	IN in_keywords		VARCHAR(255),
-	IN in_description	VARCHAR(4096),
+	IN in_url		CHAR(255),
+	IN in_keywords		VARCHAR(255) CHARSET utf8,
+	IN in_description	VARCHAR(4096) CHARSET utf8,
 	IN in_copyright		VARCHAR(255),
 	IN in_status		CHAR(1)
 )

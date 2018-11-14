@@ -9,6 +9,7 @@
 		public function logRequest($url,$client,$tid);	#Log current request
 		public function getPageByURL($url);		#Get all info of a page from db
 		public function getSitemap($num,$page);		#Get XML sitemap
+		public function logRequestEnd($s,$t,$pid,$sid);	#Log current request result
 		
 		//Template
 		public function getRecentPagesAllCate($num);	#Get recent updates for all category
@@ -212,6 +213,22 @@
 						'pageoffset'	=> $num * $page - $num
 					),
 					true
+				);
+			} catch(BW_Error $e) {
+				throw new BW_Error(__METHOD__.$e->getMessage());
+			}
+		}
+		
+		public function logRequestEnd($s,$t,$pid,$sid) {
+			try {
+				$this->call(
+					'logRequestEnd',
+					array(
+						'status'	=> $s,
+						'time'		=> $t,
+						'phpid'		=> $pid,
+						'sessionid'	=> $sid
+					)
 				);
 			} catch(BW_Error $e) {
 				throw new BW_Error(__METHOD__.$e->getMessage());
@@ -491,6 +508,7 @@
 		
 		protected $lookup = array( #Database procedure lookup table
 			'logRequest'	=> ['url','username','userip','phpid','sessionid'],
+			'logRequestEnd'	=> ['status','time','phpid','sessionid'],
 			'pageCreate'	=> ['url','title','author','category','mime','status'],
 			'pageDelete'	=> ['url'],
 			'pageGetFull'	=> ['url'],

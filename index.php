@@ -30,6 +30,8 @@
 		$BW = new Bearweb();
 		$BW->ini();
 		$BW->useTemplate(false);
+		$timeUsed = (microtime(true)-$_SERVER['REQUEST_TIME_FLOAT']).'ms';
+		$BW->endRequest($timeUsed);
 	} catch(BW_Error $e) { #Handle error
 		ob_clean();
 		ob_start();
@@ -42,7 +44,7 @@
 		writeLog('BW error debug info: '.print_r($e,true),true);
 		$BW->useErrorTemplate('[EXCEPTION] Bearweb internal error.');
 	}
-	writeLog('Job done! ('.(microtime(true)-$_SERVER['REQUEST_TIME_FLOAT']).'ms)');
+	writeLog('Job done! '.$timeUsed);
 	
 	
 	//Write log to file system
