@@ -64,25 +64,14 @@
 			'</div>',
 			'</div>';
 	}
-	else {
-		$closePageNum = array_filter(
-			array($cp-3, $cp-2, $cp-1, $cp, $cp+1, $cp+2, $cp+3),
-			function($x) {
-				if ($x < 1)
-					return false;
-				return true;
-			}
-		);
-	}
 	
 	echo '<div class="resultlabels">';
 	echo '<a href="/',$BW->URL,'?search=',$search,'">首页</a>';
-	if(isset($closePageNum)) {
-		echo '<span>';
-		foreach($closePageNum as $x) {
-			echo '<a href="/',$BW->URL,'?page=',$x,'&search=',$search,'">',$x,'</a>';
-		}
-		echo '</span>';
+	if ($cp > 1) {
+		echo '<a href="/',$BW->URL,'?page=',$cp-1,'&search=',$search,'">上一页</a>';
+	}
+	if ($currentSize == $pageSize) {
+		echo '<a href="/',$BW->URL,'?page=',$cp+1,'&search=',$search,'">下一页</a>';
 	}
 	echo '</div>';
 ?>
