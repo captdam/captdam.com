@@ -270,9 +270,9 @@ BEGIN
 		U.`Group`	= IFNULL(	in_group,	U.`Group`	),
 		U.`Password`	= IFNULL(	in_password,	U.`Password`	),
 		U.Email		= IFNULL(	in_email,	U.Email		),
-		U.`Data`	= IFNULL(	in_nickname,	U.`Data`	),
+		U.`Data`	= IFNULL(	in_data,	U.`Data`	),
 		U.Photo		= IFNULL(	in_photo,	U.Photo		)
-	WHERE U.Username = username;
+	WHERE U.Username = in_username;
 END;
 
 
