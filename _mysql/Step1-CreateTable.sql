@@ -17,7 +17,8 @@ CREATE TABLE `BW_Log` (
   `RequestPage` varchar(255) NOT NULL,
   `PHPID` varchar(255) NOT NULL,
   `SessionID` varchar(255) NOT NULL,
-  PRIMARY KEY (`TransactionID`)
+  PRIMARY KEY (`TransactionID`),
+  KEY `ID` (`ExecutionTime`,`Status`)
 ) ENGINE=InnoDB AUTO_INCREMENT=85878 DEFAULT CHARSET=utf8;
 
 
