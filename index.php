@@ -30,8 +30,6 @@
 		$BW = new Bearweb();
 		$BW->ini();
 		$BW->useTemplate(false);
-		$timeUsed = (microtime(true)-$_SERVER['REQUEST_TIME_FLOAT']).'ms';
-		$BW->endRequest($timeUsed);
 	} catch(BW_Error $e) { #Handle error
 		ob_clean();
 		ob_start();
@@ -44,8 +42,15 @@
 		writeLog('BW error debug info: '.print_r($e,true),true);
 		$BW->useErrorTemplate('[EXCEPTION] Bearweb internal error.');
 	}
-	writeLog('Job done! '.$timeUsed);
 	
+	//Record request result
+	$timeUsed = (microtime(true)-$_SERVER['REQUEST_TIME_FLOAT']).'ms';
+	try {
+		$BW->endRequest($timeUsed);
+	} catch (Exception $e) {
+		writeLog('[WARNING]Session shows username but not in db.');
+	}
+	writeLog('Job done! '.$timeUsed);
 	
 	//Write log to file system
 	function writeLog($string,$err=false) {
