@@ -633,11 +633,11 @@
 					isSection = true;
 					x = x.substr(1).trim();
 				}
-				x = x.replace(/\[b\]([^\[\]]+?)\[\/b\]/,'<b>$1</b>');
-				x = x.replace(/\[i\]([^\[\]]+?)\[\/i\]/,'<i>$1</i>');
-				x = x.replace(/\[del\]([^\[\]]+?)\[\/del\]/,'<del>$1</del>');
-				x = x.replace(/\[link\]([^\[\]]+?)\[\/link\]/,'<a href="$1">$1</a>');
-				x = x.replace('[n]','<br />');
+				x = x.replace(/\[b\]([^\[\]]+?)\[\/b\]/g,'<b>$1</b>');
+				x = x.replace(/\[i\]([^\[\]]+?)\[\/i\]/g,'<i>$1</i>');
+				x = x.replace(/\[del\]([^\[\]]+?)\[\/del\]/g,'<del>$1</del>');
+				x = x.replace(/\[link\]([^\[\]]+?)\[\/link\]/g,'<a href="$1">$1</a>');
+				x = x.replace(/\[n\]/g,'<br />');
 				var dptrx = document.createElement('p');
 				dptrx.innerHTML = x; //Use innerHTML to phase
 				if (isSection) {
