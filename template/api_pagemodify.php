@@ -76,7 +76,7 @@
 				$imageThumb->resize(1500,1500*$imageHeight/$imageWidth);
 			
 			if (substr($_POST['Copyright'],0,10) != 'Reference=' && $imageWidth > 1500 && $imageHeight > 1000)
-				$imageHD->addImage('./template/watermark.png',-550,-300);
+				$imageHD->addImage('./object/watermark.png',-550,-300);
 			
 			$imageHD = $imageHD->render(95,null);
 			$imageThumb = $imageThumb->render(65,null);
