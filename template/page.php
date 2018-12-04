@@ -63,7 +63,7 @@
 						else {
 							echo '<span class="bearweb_author">',$BW->data['Author'],'</span> ★';
 							if ($BW->data['Copyright'] != 'All rights reserved')
-								echo 'This wark is licensed under ';
+								echo 'This work is licensed under ';
 							echo $BW->data['Copyright'];
 						}
 					?></p>
