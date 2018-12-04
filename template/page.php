@@ -56,7 +56,17 @@
 				<img src="/web/logo.png" />
 				<div>
 					<p>Captdam e-mail: <a href="mailto:captdam@beardle.com">captdam@beardle.com</a></p>
-					<p>© <?php echo $BW->data['Copyright']; ?></p>
+					<p>© <?php
+						if (substr($BW->data['Copyright'],0,10) == 'Reference=')
+							echo substr($BW->data['Copyright'],10),' Uploaded by: ',
+								'<span class="bearweb_author">',$BW->data['Author'],'</span> ';
+						else {
+							echo '<span class="bearweb_author">',$BW->data['Author'],'</span> ★';
+							if ($BW->data['Copyright'] != 'All rights reserved')
+								echo 'This wark is licensed under ';
+							echo $BW->data['Copyright'];
+						}
+					?></p>
 				</div>
 			</div>
 		</footer>
