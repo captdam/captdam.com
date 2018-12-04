@@ -52,6 +52,9 @@
 			$photo = new ImageProcess($_POST['avatar']);
 			$photo->resize(200,200);
 			$update['Photo'] = $photo->render(60);
+			unset($photo);
+			if (strlen($update['Photo']) > 65500)
+				throw new Exception('Image too big.');
 			writeLog('User send new avatar: [Photo]');
 		} catch(Exception $e) {
 			http_response_code(415);
