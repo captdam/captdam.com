@@ -13,3 +13,10 @@
 	writeLog('Print content.');
 	echo $BW->data['Data'];
 ?>
+<script>
+	window.addEventListener('load',function(){
+		var image = document.getElementById('banner').src;
+		if (image != 'web/banner.jpg')
+			document.getElementById('main_content').style.backgroundImage = 'url(\''+image+'\')';
+	});
+</script>
