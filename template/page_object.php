@@ -26,6 +26,6 @@
 	<i>Version: <?php echo $BW->data['Version']; ?></i>
 </div>
 <div>
-	<p>Keywords:<br /><?php echo $BW->data['Keywords'] ? $BW->data['Keywords'] : '<i>Null</i>'; ?></p>
+	<p>Keywords:<br /><?php echo $BW->data['Keywords'] ? ('<span class="content_keywords">'.$BW->data['Keywords'].'</span>') : '<i>Null</i>'; ?></p>
 	<p>Description:<br /><?php echo $BW->data['Description'] ? $BW->data['Description'] : '<i>Null</i>'; ?></p>
 </div>
