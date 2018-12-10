@@ -6,31 +6,22 @@
 	$pageSize = 20;
 	$cp = getInputPage();
 	
-	$pass = true;
-	if (!isset($_GET['search']))
-		$pass = false;
-	$search = trim($_GET['search']);
-	if (strlen($search) > 32 || strlen($search) == 0)
-		$pass = false;
-	if (!$pass) {
+	if (!isset($_GET['search'])) {
 		http_response_code(400);
 		define('TEMPLATE_NOTEERROR',1);
-		throw new BW_Error('Bad searching keyword (maxium 32 characters).');
+		throw new BW_Error('Searching keyword undefined.');
 	}
+	$search = trim(strip_tags($_GET['search']));
 	
-	if (!isset($_GET['search'])) {
-		echo '<div>错误！请输入关键字以进行搜索。</div>';
-		return;
+	if (mb_strlen($search) > 32) {
+		http_response_code(400);
+		define('TEMPLATE_NOTEERROR',1);
+		throw new BW_Error('Searching keyword too long (max 32).');
 	}
-	$search = trim($_GET['search']);
-	
-	if (strlen($search) > 32) {
-		echo '<div>错误！输入字符串过长，（最大长度32字符）。</div>';
-		return;
-	}
-	if (strlen($search) == 0) {
-		echo '<div>错误！请输入关键字以进行搜索。</div>';
-		return;
+	if (mb_strlen($search) < 2) {
+		http_response_code(400);
+		define('TEMPLATE_NOTEERROR',1);
+		throw new BW_Error('Searching keyword too short (min 2).');
 	}
 	
 	writeLog('Searching page with keyword '.$search.', offset: '.$cp);

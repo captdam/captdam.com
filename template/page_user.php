@@ -1,5 +1,5 @@
 <?php //Login page
-	if ($BW->client['Group'] == '@Visitor' ) {
+	if (!isset($BW->client['Nickname'])) { //Only register user has nickname
 		writeLog('Print login page (saved in db).');
 		echo $this->data['Data'];
 		return;
