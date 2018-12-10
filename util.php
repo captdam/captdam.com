@@ -86,7 +86,7 @@
 		//Render image
 		//$result = $x->render('xx',00,null) return the result
 		//$x->render('xx',00,'url') save the result
-		public function render($quality=85,$filename=null) {
+		public function render($quality=85,$filename=null,$format='jpeg') {
 			//Input setting
 			if ($filename)
 				$save = true; #Save the file if filename provided
@@ -102,8 +102,25 @@
 			}
 			//Put image in file
 			try {
-				if (!imagejpeg($this->image,$file,$quality))
-					throw new Exception();
+				switch ($format) {
+					case 'jpeg':
+						if (!imagejpeg($this->image,$file,$quality))
+							throw new Exception();
+						break;
+					case 'png':
+						if (!imagepng($this->image,$file,
+							$quality > 9 || $quality < 0 ? -1 : $quality
+						))
+							throw new Exception();
+						break;
+					case 'gif':
+						if (!imagegif($this->image,$file))
+							throw new Exception();
+						break;
+					default:
+						throw new Exception();
+				}
+				
 				fclose($file);
 			} catch(Exception $e) {
 				throw new Exception('Util::ImageProcess - Cannot render image, fail to render image in this type / cannot write to file.');
