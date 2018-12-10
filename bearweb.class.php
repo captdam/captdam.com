@@ -474,6 +474,7 @@
 			);
 			$return['data']['Data'] = '==STRING==';
 			$return['data']['Binary'] = '==BINARY==';
+			$return['data']['JSON'] = '==JSON==';
 			return $return;
 		}
 
