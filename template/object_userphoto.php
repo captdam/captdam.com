@@ -17,6 +17,12 @@
 		throw new BW_Error('No such user.');
 	}
 	
+	if ($user[$BW->data['JSON']['fetch']] == NULL) {
+		http_response_code(404);
+		define('TEMPLATE_NOTEERROR',1);
+		throw new BW_Error('Data not exist.');
+	}
+	
 	echo $user[$BW->data['JSON']['fetch']];
 	writeLog('User data fetched.');
 ?>
