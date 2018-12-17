@@ -14,7 +14,7 @@
 <div class="bearform">
 	<h2>基本资料</h2>
 	<div class="pltr">
-		<img id="modifyAvatarPreview" src="/user/photo?username=<?php echo $BW->client['Username']; ?>" style="width: 200px; height: 200px; background-color: #000000;" />
+		<img id="modifyAvatarPreview" src="/user/photo?username=<?php echo $BW->client['Username']; ?>" style="width: 200px; height: 200px;" />
 		<div>
 			<label>Username</label>
 			<input value="<?php echo $BW->client['Username']; ?>" disabled />
