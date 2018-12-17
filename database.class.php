@@ -334,8 +334,11 @@
 					)
 				);
 			} catch(Exception $e) {
+				if (strpos($e->getMessage(),'1062 Duplicate'))
+					return false;
 				throw new BW_Error(__METHOD__.$e->getMessage());
 			}
+			return true;
 		}
 		
 		public function updateUser($un,$pw,$nn,$m,$p) {
