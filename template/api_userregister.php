@@ -11,7 +11,7 @@
 		throw new BW_Error('Username, password and/or nickname wrong format.');
 	}
 	
-	writeLog('New user: '.$_POST['username'].' / '.$_POST['nickname'].'. IP: '.$BW->client['IP']);
+	writeLog('New user: Nickname '.$_POST['nickname'].' (Username '.$_POST['username'].'). IP: '.$BW->client['IP']);
 	if(!$BW->database->newUser(
 		$_POST['username'],
 		$_POST['nickname'],
