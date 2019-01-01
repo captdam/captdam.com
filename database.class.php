@@ -85,21 +85,21 @@
 		}
 		
 		//Transcation
-		protected function begin() {
+		public function begin() {
 			try {
 				$this->db->beginTransaction();
 			} catch(PDOException $e) {
 				throw new BW_Error(' - Fail to begin transaction '.$e->getMessage().'.');
 			}
 		}
-		protected function commit() {
+		public function commit() {
 			try {
 				$this->db->commit();
 			} catch(PDOException $e) {
 				throw new BW_Error(' - Fail to commit transaction '.$e->getMessage().'.');
 			}
 		}
-		protected function rollback() {
+		public function rollback() {
 			try {
 				$this->db->rollback();
 			} catch(PDOException $e) {
@@ -570,10 +570,13 @@
 				}
 			
 			try {
+				$this->begin();
 				$return = parent::call($sendProce,$sendParam,$return);
 			} catch(BW_Error $e) {
+				$this->rollback();
 				throw new BW_Error(__METHOD__.$e->getMessage());
 			}
+			$this->commit();
 			
 			writeLog(__METHOD__.' - Procedure executed.');
 			return $return;
