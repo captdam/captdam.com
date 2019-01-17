@@ -35,6 +35,7 @@
 	class Database {
 		
 		private $db; #Database resource
+		private $nestLevel; #Database transaction counter
 		
 		//Constructor function, connect to database
 		function __construct($dbname,$dbhost,$dbuser,$dbpass) {
@@ -52,6 +53,8 @@
 			} catch(PDOException $e) {
 				throw new BW_Error(' - Cannot connect to database.');
 			}
+			
+			$this->nestLevel = 0;
 		}
 		
 		//Execute procedure
@@ -72,7 +75,7 @@
 		//Execute query
 		public function query($query,$para,$return=false) {
 			try {
-				$current = $this->db->prepare('CALL '.$procedure);
+				$current = $this->db->prepare($query);
 				foreach($para as $key=>$value)
 					$current->bindParam(':'.$key,$value[0],$value[1]);
 				$current->execute();
@@ -87,21 +90,28 @@
 		//Transcation
 		public function begin() {
 			try {
-				$this->db->beginTransaction();
+				if ($this->nestLevel++)
+					$this->query('SAVEPOINT X'.$this->nestLevel,array());
+				else
+					$this->db->beginTransaction();
 			} catch(PDOException $e) {
 				throw new BW_Error(' - Fail to begin transaction '.$e->getMessage().'.');
 			}
 		}
 		public function commit() {
 			try {
-				$this->db->commit();
+				if (!--$this->nestLevel)
+					$this->db->commit();
 			} catch(PDOException $e) {
 				throw new BW_Error(' - Fail to commit transaction '.$e->getMessage().'.');
 			}
 		}
 		public function rollback() {
 			try {
-				$this->db->rollback();
+				if (--$this->nestLevel)
+					$this->query('ROLLBACK TO X'.($this->nestLevel+1),array());
+				else
+					$this->db->rollback();
 			} catch(PDOException $e) {
 				throw new BW_Error(' - Fail to rollback transaction '.$e->getMessage().'.');
 			}
